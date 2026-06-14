@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JobListing extends Model
 {
@@ -16,17 +18,17 @@ class JobListing extends Model
         ];
     }
 
-    public function jobCategory()
+    public function jobCategory():BelongsTo
     {
         return $this->belongsTo(JobCategory::class, 'category_id');
     }
 
-    public function company()
+    public function company():BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function jobApplications()
+    public function jobApplications():HasMany
     {
         return $this->hasMany(JobApplication::class);
     }
