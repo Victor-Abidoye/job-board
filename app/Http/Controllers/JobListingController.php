@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreJobListingRequest;
 use Illuminate\Http\Request;
 
 class JobListingController extends Controller
@@ -25,9 +26,11 @@ class JobListingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreJobListingRequest $request)
     {
-        //
+        auth()->user()->company->jobListings()->create($request->validated());
+
+        return redirect()->route('job-listings.index');
     }
 
     /**
