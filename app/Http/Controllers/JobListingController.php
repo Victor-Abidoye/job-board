@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobListingRequest;
+use App\Http\Requests\UpdateJobListingRequest;
+use App\Models\JobListing;
 use Illuminate\Http\Request;
 
 class JobListingController extends Controller
@@ -52,9 +54,14 @@ class JobListingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateJobListingRequest $request, JobListing $jobListing)
     {
-        //
+        $field = $request->validated();
+
+        // TODO: authorize via policy.
+
+        $jobListing->update($field);
+        return redirect()->route('job-listings.index');
     }
 
     /**
