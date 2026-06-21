@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobListingRequest;
 use App\Http\Requests\UpdateJobListingRequest;
 use App\Models\JobListing;
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class JobListingController extends Controller
 {
@@ -14,7 +14,11 @@ class JobListingController extends Controller
      */
     public function index()
     {
-        //
+        $jobListiings = JobListing::all();
+
+        return Inertia::render('JobListings/Index', [
+            'jobListings' => $jobListiings
+        ]);
     }
 
     /**
@@ -38,9 +42,9 @@ class JobListingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(JobListing $jobListing)
     {
-        //
+        return Inertia::render('JobListings/Show', ['jobListing' => $jobListing]);
     }
 
     /**
@@ -67,8 +71,10 @@ class JobListingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(JobListing $jobListing)
     {
-        //
+        $jobListing->delete();
+
+        return redirect()->route('job-listings.index');
     }
 }
